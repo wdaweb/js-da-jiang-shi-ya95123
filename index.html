@@ -5,11 +5,11 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="stylesheet" href="./css/bootstrap.css">
-  <title>Hello, world!</title>
+  <title>捉 星 星！</title>
   <style>
     * {
 
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, '微軟正黑體';
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, 'Microsoft Yahei';
     }
 
     html,
@@ -22,13 +22,60 @@
       height: 100vh;
       background: url(./images/bg.svg);
     }
+
+    #count {
+      height: 9%;
+      font-size: 2.2rem;
+      color: rgb(243, 255, 133);
+    }
+
+    #game-area {
+      height: 82%;
+    }
+
+    #footer {
+      height: 9%;
+      font-size: 2.2rem;
+      color: rgb(235, 235, 235);
+      filter: drop-shadow(0rem 0rem 0.2rem rgb(255, 255, 100));
+    }
   </style>
 </head>
 
 <body>
+  <!-- TODO 1.遊戲玩法介紹(有左右頁文字無框?輪播圖) 2.開始按鈕(動畫發亮) 3.遊戲中JQ(星星跑動、計分、計數) 4.遊戲結束對話(若為第一則輸入名字) -->
+  <div id="count" class="container-fluid d-flex justify-content-between align-items-center">
+    <!-- N1 遊戲開始時消失 -->
+    <div id="N1">
+      捉星星達人：<span id="N1-name"></span>
+    </div>
+    <div>
+      GET <b>✰</b>＊
+      <span id="getStar-num" class="text-white">0</span>
+    </div>
+  </div>
+
+  <!-- 星星範圍 -->
+  <div id="game-area" class="container-fluid"></div>
+
+  <!-- 存活星星數(達20遊戲結束) -->
+  <div id="footer" class="container-fluid d-flex justify-content-between align-items-center">
+    <div>
+      ⚝ / <span id="leaveStart-num">0</span>
+    </div>
+  </div>
+
   <script src="./js/jquery-3.5.1.min.js"></script>
   <script src="./js/popper.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
+
+  <!-- * ID結構(JQ會用到的) -->
+  <!--
+    N1-name：最高分的捉星星達人名字
+    getStar-num：當局遊戲中獲得星星數
+    game-area：星星跑動範圍
+    leaveStart-num：遊戲中星星存活數(若===20，遊戲結束)
+  -->
 </body>
 
 </html>
