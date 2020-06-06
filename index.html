@@ -21,6 +21,8 @@
       width: 100vw;
       height: 100vh;
       background: url(./images/bg.svg);
+      overflow: hidden;
+      /* transition: 0.3s; */
     }
 
     #count {
@@ -62,11 +64,28 @@
     .pic-text p {
       font-size: 1.05rem;
     }
+
+    #go {
+      position: absolute;
+      top: 63.5%;
+      left: 50%;
+      z-index: 11;
+      transform: translateX(-50%);
+      transition: 0.6s;
+    }
+
+    #go:focus {
+      width: 5vmin;
+      height: 5vmin;
+      border-radius: 50%;
+      transform: translateX(-50%) rotate(2520deg) scale(1.3);
+    }
   </style>
 </head>
 
 <body>
-  <!-- TODO 1.遊戲玩法介紹(有左右頁文字無框?輪播圖) 2.開始按鈕(動畫發亮) 3.遊戲中JQ(星星跑動、計分、計數) 4.遊戲結束對話(若為第一則輸入名字) -->
+  <!-- TODO 1.遊戲玩法介紹(有左右頁文字無框?輪播圖)OK 2.開始按鈕(動畫發亮) 3.遊戲中JQ(星星跑動、計分、計數) 4.遊戲結束對話(若為第一則輸入名字) -->
+  <!-- *top-計算區 -->
   <div id="count" class="container-fluid d-flex justify-content-between align-items-center">
     <!-- *N1 遊戲開始時消失 -->
     <div id="N1">
@@ -94,7 +113,7 @@
       <div class="carousel-item active">
         <img src="./images/trasparent-bg-text.svg" class="d-block w-100">
         <div class="pic-text">
-          <h4>來捉星星吧 🌟</h4>
+          <h4>來捉星星吧🌟</h4>
           <p>據說：捕捉到星星的人，內心會開始轉變，變得更快樂，更能夠享受這一生，只是捉星星的同時，必須保有純潔的心，若帶著急躁、貪婪的心，將會越來越捉不到...</p>
         </div>
 
@@ -102,7 +121,7 @@
       <div class="carousel-item">
         <img src="./images/trasparent-bg-text.svg" class="d-block w-100">
         <div class="pic-text">
-          <h4>如何捕捉星星 💫</h4>
+          <h4>如何捕捉星星💫</h4>
           <p>星星回從四面八方出現，時間越久會越來越快，不過你只有30秒的時間，請你將你的網子放到星星上點一下，就捕捉到囉！<br>
             <span style="color: rgb(243, 255, 133);">注意：星星可是會越飛越快的哦</span>
           </p>
@@ -126,6 +145,9 @@
     </a>
   </div>
 
+  <!-- *開始按鈕 -->
+  <button id="go" type="button" class="btn btn-outline-warning btn-sm">出發</button>
+
   <script src="./js/jquery-3.5.1.min.js"></script>
   <script src="./js/popper.min.js"></script>
   <script src="./js/bootstrap.min.js"></script>
@@ -137,6 +159,25 @@
     game-area：星星跑動範圍
     leaveStart-num：遊戲中星星存活數(若===20，遊戲結束)
   -->
+
+  <script>
+    $(function () {
+      // 開始鍵觸發動畫
+      $('#go').click(function () {
+        $('#go').text('🚀')
+        setTimeout(() => {
+          $('#go').css('top', '-55%')
+          $('#rule').css('top', '-55%')
+          $('body').css('filter', 'brightness(3)')
+        }, 600)
+        setTimeout(() => {
+          $('body').css('filter', 'brightness(1)')
+        }, 900)
+      })
+
+
+    })
+  </script>
 </body>
 
 </html>
