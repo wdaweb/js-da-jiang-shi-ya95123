@@ -131,7 +131,7 @@
         <div class="pic-text">
           <h4>如何捕捉星星💫</h4>
           <p>星星會從四面八方出現，時間越久會越來越快，請你將你的網子放到星星上點一下，就捕捉到囉！當天空星星存留超過20顆，就會被送回到地球上。<br>
-            <span style="color: rgb(243, 255, 133);">注意：星星可是會越飛越快的哦</span>
+            <span style="color: rgb(243, 255, 133);">注意：星星可是會越飛越快的哦，遇到流星趕快抓緊它！</span>
           </p>
         </div>
       </div>
@@ -234,6 +234,7 @@
             // 進行中
             if (leaveStart < 20) {
               let num1 = rand(1, 100)
+              console.log(num1);
               // 放入 一般星星 / 流星 機率 9.5:0.5----------------
               if (num1 <= 95) {
                 // 放入一般星星N(+流水號)
@@ -241,7 +242,7 @@
               }
               else if (num1 >= 96 && num1 <= 100) {
                 // 放入流星Q(+流水號)
-                $('#game-area').append(`<img id="star${starID}" class="starQ star" src="./images/starN.svg">`)
+                $('#game-area').append(`<img id="star${starID}" class="starQ star" src="./images/starQ.svg">`)
               }
 
               // 隨機位置出現 各25% 上下左右-----------------------
