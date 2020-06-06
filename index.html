@@ -226,15 +226,17 @@
             // 出現速率：每次-0.05s
             if (occur >= 500) {
               occur -= 50
+              console.log(`出現速率：${occur}s`);
             }
             // 星星速度：每次-0.1s
             if (speed >= 700) {
               speed -= 100
+              console.log(`星星跑速：${speed}s`);
             }
             // 進行中
             if (leaveStart < 20) {
               let num1 = rand(1, 100)
-              console.log(num1);
+              console.log(`星星機率分布：${num1}`);
               // 放入 一般星星 / 流星 機率 9.5:0.5----------------
               if (num1 <= 95) {
                 // 放入一般星星N(+流水號)
@@ -244,6 +246,9 @@
                 // 放入流星Q(+流水號)
                 $('#game-area').append(`<img id="star${starID}" class="starQ star" src="./images/starQ.svg">`)
               }
+              // 存留數+1
+              leaveStart++
+              $('#leaveStart-num').text(leaveStart)
 
               // 隨機位置出現 各25% 上下左右-----------------------
               let num2 = rand(1, 100)
@@ -264,11 +269,14 @@
                 $(`#star${starID}`).css({ "bottom": "0", "left": `${rand(0, 100)}%` })
               }
 
-
+              // 星星流水號
               starID++
             }
+            // TODO 結束條件 存留星星20顆以上
+            // else if (leaveStart >= 20) {
+            //   clearInterval(gametimer)
+            // }
 
-            // 結束條件
 
           }, occur)
         }, 500)
