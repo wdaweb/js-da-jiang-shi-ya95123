@@ -128,7 +128,7 @@
     <!-- *N1 遊戲開始時消失 -->
     <div id="N1">
       捉星星達人：<span id="N1-name"></span>
-      (<span id="N1-num"></span>顆)
+      <span id="N1-num"></span>
     </div>
     <div>
       GET <b>✰</b>＊
@@ -244,7 +244,7 @@
       $('#N1-name').text(N1star.name)
       // TODO 將星星達人的"數量"載入，並修改網頁文字
       N1star.num = storage.num
-      $('#N1-num').text(N1star.num)
+      $('#N1-num').text(`(${N1star.num}顆)`)
     }
 
 
@@ -371,7 +371,7 @@
                 N1star.num = getStar
                 // 修改達人網頁文字
                 $('#N1-name').text(N1star.name)
-                $('#N1-num').text(N1star.num)
+                $('#N1-num').text(`(${N1star.num}顆)`)
                 // *將達人變數"轉文字"後存入 localStorage
                 localStorage.setItem("N1star", JSON.stringify(N1star));
               }
