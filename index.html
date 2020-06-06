@@ -47,13 +47,24 @@
       top: 50%;
       transform: translate(-50%, -50%);
     }
+
+    /* 輪播圖文字內容 */
+    .pic-text {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 10;
+      text-align: center;
+      color: white;
+    }
   </style>
 </head>
 
 <body>
   <!-- TODO 1.遊戲玩法介紹(有左右頁文字無框?輪播圖) 2.開始按鈕(動畫發亮) 3.遊戲中JQ(星星跑動、計分、計數) 4.遊戲結束對話(若為第一則輸入名字) -->
   <div id="count" class="container-fluid d-flex justify-content-between align-items-center">
-    <!-- N1 遊戲開始時消失 -->
+    <!-- *N1 遊戲開始時消失 -->
     <div id="N1">
       捉星星達人：<span id="N1-name"></span>
     </div>
@@ -63,36 +74,37 @@
     </div>
   </div>
 
-  <!-- 星星範圍 -->
+  <!-- *星星範圍 -->
   <div id="game-area" class="container-fluid"></div>
 
-  <!-- 存活星星數(達20遊戲結束) -->
+  <!-- *存活星星數(達20遊戲結束) -->
   <div id="footer" class="container-fluid d-flex justify-content-between align-items-center">
     <div>
       ⚝ / <span id="leaveStart-num">0</span>
     </div>
   </div>
 
-  <!-- 遊戲規則對話框 -->
+  <!-- *遊戲規則對話框 -->
   <div id="rule" class="carousel slide w-75" data-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="https://picsum.photos/600/200/?random=1" class="d-block w-100">
-        <div class="carousel-caption d-none d-md-block">
+        <img src="./images/trasparent-bg-text.svg" class="d-block w-100">
+        <div class="pic-text">
+          <h5>臨時筆記。</h5>
+          <p>明白機會審核股份有限公司障礙網域名稱部落格，提到人群伺服器幫忙些什麼並且一切您可以一部方法改造，最。</p>
+        </div>
+
+      </div>
+      <div class="carousel-item">
+        <img src="./images/trasparent-bg-text.svg" class="d-block w-100">
+        <div class="pic-text">
           <h5>...</h5>
           <p>...</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="https://picsum.photos/600/200/?random=1" class="d-block w-100">
-        <div class="carousel-caption d-none d-md-block">
-          <h5>...</h5>
-          <p>...</p>
-        </div>
-      </div>
-      <div class="carousel-item">
-        <img src="https://picsum.photos/600/200/?random=1" class="d-block w-100">
-        <div class="carousel-caption d-none d-md-block">
+        <img src="./images/trasparent-bg-text.svg" class="d-block w-100">
+        <div class="pic-text">
           <h5>...</h5>
           <p>...</p>
         </div>
