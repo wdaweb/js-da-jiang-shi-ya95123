@@ -33,6 +33,8 @@
 
     #game-area {
       height: 82%;
+      position: relative;
+      overflow: hidden;
     }
 
     #footer {
@@ -50,7 +52,7 @@
       transform: translate(-50%, -50%);
     }
 
-    /* 輪播圖文字內容 */
+    /* 輪播文字內容 */
     .pic-text {
       position: absolute;
       left: 50%;
@@ -80,6 +82,12 @@
       border-radius: 50%;
       transform: translateX(-50%) rotate(2520deg) scale(1.3);
     }
+
+    .star {
+      width: 12vmin;
+      position: absolute;
+      /* top: 50%; */
+    }
   </style>
 </head>
 
@@ -98,7 +106,7 @@
   </div>
 
   <!-- *星星範圍 -->
-  <div id="game-area" class="container-fluid"></div>
+  <div id="game-area" class="container-fluid p-0"></div>
 
   <!-- *存活星星數(達20遊戲結束) -->
   <div id="footer" class="container-fluid d-flex justify-content-between align-items-center">
@@ -163,15 +171,36 @@
   <!-- * ID結構(JQ會用到的) -->
   <!--
     N1-name：最高分的捉星星達人名字
+    leaveStart-num：遊戲中星星存活數(若===20，遊戲結束)
     getStar-num：當局遊戲中獲得星星數
     game-area：星星跑動範圍
-    leaveStart-num：遊戲中星星存活數(若===20，遊戲結束)
+    starN：一般星星
+    starQ：流星
+    starID：星星流水號
   -->
-
   <script>
+    // 存留星星數
+    let leaveStart = 0
+    // 獲得星星數
+    let getStar = 0
+    // 星星出現
+    let gametimer = 0
+    // 出現速率
+    let occur = 1050
+    // 移動速度
+    let speed = 3100
+    // 星星流水號
+    let starID = 0
+
+    // 區間隨機亂數
+    const rand = (min, max) => {
+      return Math.round(Math.random() * (max - min) + min)
+    }
+
     $(function () {
-      // 開始鍵觸發動畫
+      // 捉星星開始鍵
       $('#go').click(function () {
+        // 轉場
         $('#go').text('🚀')
         setTimeout(() => {
           $('#go').css('top', '-55%')
@@ -181,6 +210,67 @@
         setTimeout(() => {
           $('body').css('filter', 'brightness(1)')
         }, 900)
+
+        // 重置面板
+        leaveStart = 0
+        getStar = 0
+        $('#leaveStart-num').text(leaveStart)
+        $('#getStar-num').text(getStar)
+        // 重置速率
+        occur = 1050
+        speed = 3100
+
+        // 星星出現
+        setTimeout(() => {
+          gametimer = setInterval(() => {
+            // 出現速率：每次-0.05s
+            if (occur >= 500) {
+              occur -= 50
+            }
+            // 星星速度：每次-0.1s
+            if (speed >= 700) {
+              speed -= 100
+            }
+            // 進行中
+            if (leaveStart < 20) {
+              let num1 = rand(1, 100)
+              // 放入 一般星星 / 流星 機率 9.5:0.5----------------
+              if (num1 <= 95) {
+                // 放入一般星星N(+流水號)
+                $('#game-area').append(`<img id="star${starID}" class="starN star" src="./images/starN.svg">`)
+              }
+              else if (num1 >= 96 && num1 <= 100) {
+                // 放入流星Q(+流水號)
+                $('#game-area').append(`<img id="star${starID}" class="starQ star" src="./images/starN.svg">`)
+              }
+
+              // 隨機位置出現 各25% 上下左右-----------------------
+              let num2 = rand(1, 100)
+              if (num2 <= 25) {
+                // 左側
+                $(`#star${starID}`).css({ "top": `${rand(0, 100)}%` })
+              }
+              else if (num2 >= 26 && num2 <= 50) {
+                // 右側
+                $(`#star${starID}`).css({ "top": `${rand(0, 100)}%`, "right": "0" })
+              }
+              else if (num2 >= 51 && num2 <= 75) {
+                // 上
+                $(`#star${starID}`).css({ "left": `${rand(0, 100)}%` })
+              }
+              else if (num2 >= 76 && num1 <= 100) {
+                // 下
+                $(`#star${starID}`).css({ "bottom": "0", "left": `${rand(0, 100)}%` })
+              }
+
+
+              starID++
+            }
+
+            // 結束條件
+
+          }, occur)
+        }, 500)
       })
 
 
