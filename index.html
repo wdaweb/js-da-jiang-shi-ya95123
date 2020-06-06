@@ -200,6 +200,15 @@
     starID：星星流水號
   -->
   <script>
+    // 音效載入
+    const catchMusic = new Audio
+    const bgMusic = new Audio
+    bgMusic.src = './music/drum_rythm.mp3'
+    bgMusic.loop = true
+    // 音效陣列
+    let catchMusicList = ['./music/pianoA.mp3', './music/pianoB.mp3', './music/pianoC.mp3', './music/pianoD.mp3', './music/pianoE.mp3', './music/pianoF.mp3', './music/pianoG.mp3', './music/pianoC2.mp3', './music/small_drum.mp3', './music/bass_drum.mp3']
+
+
     // 存留星星數
     let leaveStart = 0
     // 獲得星星數
@@ -212,6 +221,7 @@
     let speed = 3100
     // 星星流水號 (從1開始)
     let starID = 1
+
 
     // 區間隨機亂數
     const rand = (min, max) => {
@@ -242,6 +252,8 @@
         }, 600)
         setTimeout(() => {
           $('body').css('filter', 'brightness(1)')
+          // 播方背景音樂
+          bgMusic.play()
         }, 900)
 
         // 重置面板
@@ -308,7 +320,13 @@
             }
             // TODO 結束條件 存留星星15顆以上
             else {
+              // 音樂停止
+              bgMusic.pause()
+              bgMusic.currentTime = 0
+              // 停止遊戲
               clearInterval(gametimer)
+              // 清除所有星星
+              $(".star").remove();
               alert('結束')
             }
 
@@ -316,6 +334,8 @@
         }, 500)
         // })進入click判斷
       })
+
+      // 捕捉星星
       // 捕捉一般星星 !如果是有複層的標籤 需要用到 on('click','選到該標籤')
       $('#game-area').on('mousedown', '.starN', function () {
         // 面板控制
@@ -334,6 +354,11 @@
         $('#getStar-num').text(getStar)
         // 整個星星標籤消失
         $('.star').remove()
+      })
+      // 捕捉星星"純音效控制"
+      $('#game-area').on('mousedown', '.star', function () {
+        catchMusic.src = catchMusicList[rand(0, 9)]
+        catchMusic.play()
       })
 
 
