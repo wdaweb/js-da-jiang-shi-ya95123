@@ -34,7 +34,7 @@
     #game-area {
       height: 82%;
       position: relative;
-      overflow: hidden;
+      /* overflow: hidden; */
     }
 
     #footer {
@@ -86,7 +86,28 @@
     .star {
       width: 12vmin;
       position: absolute;
-      /* top: 50%; */
+    }
+
+    .star:hover {
+      filter: hue-rotate(45deg);
+    }
+
+    .star:active {
+      filter: hue-rotate(300deg);
+    }
+
+    .starN {
+      animation: rotate 0.15s infinite;
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(0deg);
+      }
+
+      from {
+        transform: rotate(60deg);
+      }
     }
   </style>
 </head>
@@ -130,7 +151,7 @@
         <img src="./images/trasparent-bg-text.svg" class="d-block w-100">
         <div class="pic-text">
           <h4>如何捕捉星星💫</h4>
-          <p>星星會從四面八方出現，時間越久會越來越快，請你將你的網子放到星星上點一下，就捕捉到囉！當天空星星存留超過20顆，就會被送回到地球上。<br>
+          <p>星星會從四面八方出現，時間越久會越來越快，請你將你的網子放到星星上點一下，就捕捉到囉！當天空星星存留10顆以上，就會被送回地球。<br>
             <span style="color: rgb(243, 255, 133);">注意：星星可是會越飛越快的哦，遇到流星趕快抓緊它！</span>
           </p>
         </div>
@@ -189,14 +210,26 @@
     let occur = 1050
     // 移動速度
     let speed = 3100
-    // 星星流水號
-    let starID = 0
+    // 星星流水號 (從1開始)
+    let starID = 1
 
     // 區間隨機亂數
     const rand = (min, max) => {
       return Math.round(Math.random() * (max - min) + min)
     }
 
+    // 星星移動遞迴
+    const moveStar = (starID) => {
+      $(`#star${starID}`).animate({
+        top: rand(0, 100) + "%",
+        left: rand(0, 100) + "%"
+      }, speed, function () {
+        // 進入遞迴
+        moveStar(starID)
+      })
+    }
+
+    // JQ 執行
     $(function () {
       // 捉星星開始鍵
       $('#go').click(function () {
@@ -229,12 +262,12 @@
               console.log(`出現速率：${occur}s`);
             }
             // 星星速度：每次-0.1s
-            if (speed >= 700) {
-              speed -= 100
+            if (speed >= 300) {
+              speed -= 50
               console.log(`星星跑速：${speed}s`);
             }
-            // 進行中
-            if (leaveStart < 20) {
+            // 進行中 10顆星星內都可以捕捉
+            if (leaveStart < 10) {
               let num1 = rand(1, 100)
               console.log(`星星機率分布：${num1}`);
               // 放入 一般星星 / 流星 機率 9.5:0.5----------------
@@ -242,7 +275,7 @@
                 // 放入一般星星N(+流水號)
                 $('#game-area').append(`<img id="star${starID}" class="starN star" src="./images/starN.svg">`)
               }
-              else if (num1 >= 96 && num1 <= 100) {
+              else {
                 // 放入流星Q(+流水號)
                 $('#game-area').append(`<img id="star${starID}" class="starQ star" src="./images/starQ.svg">`)
               }
@@ -268,18 +301,39 @@
                 // 下
                 $(`#star${starID}`).css({ "bottom": "0", "left": `${rand(0, 100)}%` })
               }
-
+              // 讓該星星進入 移動遞迴
+              moveStar(starID)
               // 星星流水號
               starID++
             }
-            // TODO 結束條件 存留星星20顆以上
-            // else if (leaveStart >= 20) {
-            //   clearInterval(gametimer)
-            // }
-
+            // TODO 結束條件 存留星星15顆以上
+            else {
+              clearInterval(gametimer)
+              alert('結束')
+            }
 
           }, occur)
         }, 500)
+        // })進入click判斷
+      })
+      // 捕捉一般星星 !如果是有複層的標籤 需要用到 on('click','選到該標籤')
+      $('#game-area').on('mousedown', '.starN', function () {
+        // 面板控制
+        leaveStart--
+        getStar++
+        $('#leaveStart-num').text(leaveStart)
+        $('#getStar-num').text(getStar)
+        // 整個星星標籤消失
+        $(this).remove()
+      })
+      // 捕捉流星 (所有星星都捕捉起來)
+      $('#game-area').on('mousedown', '.starQ', function () {
+        leaveStart -= $('.star').length
+        getStar += $('.star').length
+        $('#leaveStart-num').text(leaveStart)
+        $('#getStar-num').text(getStar)
+        // 整個星星標籤消失
+        $('.star').remove()
       })
 
 
