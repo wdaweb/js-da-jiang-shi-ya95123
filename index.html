@@ -344,7 +344,7 @@
               // 星星流水號
               starID++
             }
-            // TODO 結束條件 存留星星15顆以上
+            // 結束條件 存留星星10顆以上
             else {
               // 音樂停止
               bgMusic.pause()
@@ -365,7 +365,7 @@
               }
               // 達人名稱輸入及存入 localstorage
               // 有輸入名字(trim去除前後空白!='')
-              if (input != null && input.trim() != '' && input > N1star.num) {
+              if (input != null && input.trim() != '' && getStar > N1star.num) {
                 // 將輸入的名字與星星數存入變數
                 N1star.name = input
                 N1star.num = getStar
